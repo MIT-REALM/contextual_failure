@@ -1,0 +1,63 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "contextual-failure"
+version = "0.1.0"                           
+description = "Scenario generation across AEB, CARLA, and Push-T, with a shared Active learning pipeline."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "Anjali Parashar", email = "anjalip@mit.edu" }]
+keywords = ["autonomy", "scenario-generation", "bayesian-optimization", "carla", "aeb"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+
+# Minimal, shared deps (edit to match your real requirements)
+dependencies = [
+  "numpy>=1.23",
+  "scipy>=1.10",
+  "tqdm",
+]
+
+[project.optional-dependencies]
+aeb   = ["matplotlib"]   # add AEB-specific libs
+carla = []               # pin CARLA client libs 
+push_t = []
+all = ["contextual-failure[aeb,carla,push_t]"]
+
+# Command-line entry points
+[project.scripts]
+cf       = "contextual_failure.cli:main"
+cf-aeb   = "contextual_failure.aeb.app:main"
+cf-carla = "contextual_failure.carla.app:main"
+cf-pusht = "contextual_failure.push_t.app:main"
+
+# Simple plugin namespace (optional)
+[project.entry-points."cf.plugins"]
+aeb   = "contextual_failure.aeb.app:plugin"
+carla = "contextual_failure.carla.app:plugin"
+push_t = "contextual_failure.push_t.app:plugin"
+
+[project.urls]
+Homepage = "https://github.com/MIT-REALM/contextual_failure"
+Issues   = "https://github.com/MIT-REALM/contextual_failure/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/contextual_failure"]
+
+# Optional: ruff/black configs (nice to have)
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E","F","I","UP"]
+
+[tool.black]
+line-length = 100
+target-version = ["py39"]
