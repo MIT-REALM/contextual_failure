@@ -1,4 +1,4 @@
-# Contextual_failure
+# Contextual Failure discovery using Bayesian Experiment Design
 Repository for "Cost-aware Discovery of Contextual Failures using Bayesian Active Learning", CoRL 2025
 
 # CARLA failure discovery for Mode 1 (misdetection due to bad visibility from distance) and Mode 2 (misdetection due to bad lighting)
